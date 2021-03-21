@@ -9,9 +9,9 @@
 <body>
 <%@ include file="header.jsp" %>
 <div class="content">
-    <p style="text-align: center; font-size: 50px; color:orangered;">אתר הנסיך הקטן</p>
-    <img style="height: 636px; width: 500px" src="tlp_home.jpg" alt="The Little Prince Image"></img>
+	<p style="text-align: center; font-size: 50px;">סיור וירטואלי במסלול "הנסיך הקטן"</p>
+	<iframe src="https://drive.google.com/file/d/1t4SEtp-AN-i6uGXG9Cbp41hscTMxftaf/preview" width="640" height="640"></iframe>
+	
 </div>
-<%@ include file="pathfooter.jsp" %>
 </body>
 </html>
