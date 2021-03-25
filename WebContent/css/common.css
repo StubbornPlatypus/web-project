@@ -1,13 +1,16 @@
 @charset "UTF-8";
-html{
+
+html {
 	width: 100%;
 	height: 100%;
 }
-*{
+
+* {
 	font-family: sans-serif;
 	box-sizing: border-box;
 }
-body{
+
+body {
 	width: 100%;
 	height: 100%;
 	margin: 0;
@@ -15,22 +18,22 @@ body{
 }
 
 .content {
-    width: 80%;
-    height: 92%;
-	background-color:#e6faff;
-	float:right;
+	width: 80%;
+	height: 92%;
+	background-color: #e6faff;
+	float: right;
 }
 
 .pathfooter {
-  position: absolute;
-  bottom: 4%;
-  width: 80%;
-  height: 2.5rem;
-  border: 0px;
+	position: absolute;
+	bottom: 4%;
+	width: 80%;
+	height: 2.5rem;
+	border: 0px;
 }
 
 @media only screen and (max-width: 400px) {
-  .content {
-    background-color: green;
-  }
+	.content {
+		background-color: green;
+	}
 }

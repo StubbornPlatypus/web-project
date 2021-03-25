@@ -12,6 +12,6 @@
     <p style="text-align: center; font-size: 50px; color:orangered;">אתר הנסיך הקטן</p>
     <img style="height: 636px; width: 500px" src="tlp_home.jpg" alt="The Little Prince Image"></img>
 </div>
-<%@ include file="pathfooter.jsp" %>
+
 </body>
 </html>

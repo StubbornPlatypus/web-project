@@ -17,7 +17,8 @@ public class MySQLDB {
 		String connectionURL = "jdbc:mysql://localhost:3306/mysqldb?serverTimezone=Asia/Jerusalem";
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            con= DriverManager.getConnection(connectionURL, "root", "SQLBlaBlaBla1");
+         //   con= DriverManager.getConnection(connectionURL, "root", "SQLBlaBlaBla1");
+            con= DriverManager.getConnection(connectionURL, "root", "amirim123");
         } catch (Exception e) {
 			System.out.println("error in connecting to the DB");
 			con = (Connection)null;	
@@ -41,9 +42,6 @@ public class MySQLDB {
 								return true;			
 				   			  }
 	}
-	
-	
-
 	
 	public void AddNewUser(User user){
        String sqlString = "INSERT INTO  users" + " (nickname, password, role)" 
@@ -116,6 +114,33 @@ public class MySQLDB {
 					u.setRole(rs.getString(rs.findColumn("role")));
 					u.setId(rs.getInt(rs.findColumn("id")));
 					result.add(u);
+				}
+				return result;
+			} catch (SQLException e) 
+			{
+				System.out.println("error in querying the DB");
+				e.printStackTrace();
+				return null;
+			}
+	}
+	
+	public List<Post> getAllPosts()
+	{
+	    Statement statement;
+        ResultSet rs;
+		try {
+				statement = con.createStatement();
+		        String queryString;
+		        queryString = "SELECT * FROM posts WHERE page='test.jsp'";
+		        
+				rs = statement.executeQuery(queryString);
+				List<Post> result = new ArrayList<Post>();
+				while(rs.next()) {
+					Post p = new Post();
+					p.setText(rs.getString(rs.findColumn("text")));
+					p.setDate(rs.getDate(rs.findColumn("date")));
+					p.setUid(rs.getInt(rs.findColumn("uid")));
+					result.add(p);
 				}
 				return result;
 			} catch (SQLException e) 
