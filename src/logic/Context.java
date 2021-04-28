@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -14,6 +16,7 @@ import javax.servlet.jsp.PageContext;
 
 
 import model.MySQLDB;
+import model.Post;
 import model.User;
 
 //This class is a middle layer class between the "communication" layers 
@@ -27,11 +30,13 @@ public class Context {
 	HttpSession session;
 	ServletContext application;
 	PrintWriter out;
+	List<Post> awaitingPosts;
 	static MySQLDB dbc= new MySQLDB();
 	
 	
 	private final String SESSION_KEY_USER= "currentUser";
 	private final String SESSION_KEY_MANAGER= "isManager";
+	private final int AWAITING_POST_LIMIT= 100;
 	
 //used mainly from JSP	
 	public Context(PageContext pContext) throws Exception {
@@ -55,6 +60,9 @@ public class Context {
 				throw(new Exception("no db connection"));
 			}
 		} catch (IOException e) {};
+		
+		List<Post> l = dbc.getAllPosts("test.jsp");
+		System.out.println(Arrays.toString(l.toArray()));
 		
 	}
 	
@@ -156,6 +164,26 @@ public class Context {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public String getPostHTML(String date, String name, String content){
+        return "<div style=\"height: 100px; width: 80%; background-color: yellowgreen;\">\n"
+        +"<p style=\"float: right;\" id=\"date\"></p>" + date + "</p>\n"
+        +"<hr>\n"
+        +"<p style=\"float: right;\" id=\"name\">" + name + "</p> <p style=\"float: right; white-space: pre;\">  : </p>\n"
+        +"<p style=\"float: right;\" id=\"comment_content\">" + content + "</p>\n"
+        +"</div>";
+    }
+	
+	public void addToAwaitingPosts(Post post) {
+		awaitingPosts.add(post);
+	}
+	public void removeFromAwaitingPosts(Post post) {
+		awaitingPosts.remove(post);
+	}
+	
+	public List<Post> getAwaitingPosts(){
+		return awaitingPosts;
 	}
 	
 }

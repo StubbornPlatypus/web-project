@@ -94,8 +94,6 @@ public class MySQLDB {
 				   			  }
 	}
 	
-	
-
 	public List<User> getAllUsers()
 	{
 	    Statement statement;
@@ -124,20 +122,21 @@ public class MySQLDB {
 			}
 	}
 	
-	public List<Post> getAllPosts()
+	public List<Post> getAllPosts(String page)
 	{
 	    Statement statement;
         ResultSet rs;
 		try {
 				statement = con.createStatement();
 		        String queryString;
-		        queryString = "SELECT * FROM posts WHERE page='test.jsp'";
+		        queryString = "SELECT * FROM posts WHERE page='"+page+"'";
 		        
 				rs = statement.executeQuery(queryString);
 				List<Post> result = new ArrayList<Post>();
 				while(rs.next()) {
 					Post p = new Post();
 					p.setText(rs.getString(rs.findColumn("text")));
+					p.setPage(rs.getString(rs.findColumn("page")));
 					p.setDate(rs.getDate(rs.findColumn("date")));
 					p.setUid(rs.getInt(rs.findColumn("uid")));
 					result.add(p);
@@ -173,11 +172,10 @@ public class MySQLDB {
 			}
 	}
 	
-	
 	public boolean DeleteUser(String nickName)
 	{
 		try{
-	        String delString = "DELETE FROM users  WHERE nickname=?";
+	        String delString = "DELETE FROM users WHERE nickname=?";
 			PreparedStatement statement = con.prepareStatement(delString);
 			statement.setString(1, nickName);
             statement.executeUpdate();
@@ -187,7 +185,6 @@ public class MySQLDB {
 				return false;
 			  }
 	}
-
 	
 	public void Close() {
 		try {

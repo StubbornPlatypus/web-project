@@ -8,6 +8,14 @@ public class Post {
 	String page, text;
 	Date date;
 	
+	public Post(int id, int uid, String page, String text, Date date) {
+		this.id = id;
+		this.uid = uid;
+		this.page = page;
+		this.text = text;
+		this.date = date;
+	}
+	
 	public int getUid() {
 		return uid;
 	}
@@ -33,5 +41,9 @@ public class Post {
 		this.date = date;
 	}
 	
+	@Override
+	public String toString() {
+		return "Post (id=" + id + ", uid=" + uid + ", page=" + page + ", text=" + text + ", date=" + date + ")";
+	}
 	
 }
