@@ -41,6 +41,7 @@ public class HttpHandler extends HttpServlet {
 		
 		if (command == null)
 			response.getWriter().print("<p style='font-size: 24px'>I don't understand you!!!</p>");
+		
 		else {
 			switch(command) {
 			case "register":
@@ -54,7 +55,12 @@ public class HttpHandler extends HttpServlet {
 				break;
 			case "other":
 				response.getWriter().print("<p style='font-size: 24px'>not supported yet!!!</p>");
-			
+				break;
+			case "acceptPost":
+				ctx.handleAcceptPost();
+				break;
+			case "removePost":
+				ctx.handleRemovePost();
 				break;
 			case "uploadFile":
 				/* String filename1= uploadTheFile(request, "file1", UPLOAD_FOLDER);*/

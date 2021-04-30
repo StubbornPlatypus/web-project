@@ -44,7 +44,7 @@ public class MySQLDB {
 	}
 	
 	public void AddNewUser(User user){
-       String sqlString = "INSERT INTO  users" + " (nickname, password, role)" 
+       String sqlString = "INSERT INTO users" + " (nickname, password, role)" 
 							+ "VALUES ('"
 							+ user.getNickName() + "', '" 
         					+ user.getPassword()  + "', '" 
@@ -135,6 +135,7 @@ public class MySQLDB {
 				List<Post> result = new ArrayList<Post>();
 				while(rs.next()) {
 					Post p = new Post();
+					p.setId(rs.getInt(rs.findColumn("id")));
 					p.setText(rs.getString(rs.findColumn("text")));
 					p.setPage(rs.getString(rs.findColumn("page")));
 					p.setDate(rs.getDate(rs.findColumn("date")));
@@ -148,6 +149,60 @@ public class MySQLDB {
 				e.printStackTrace();
 				return null;
 			}
+	}
+	
+	
+	public List<Post> getWaitingPosts()
+	{
+	    Statement statement;
+        ResultSet rs;
+		try {
+				statement = con.createStatement();
+		        String queryString;
+		        queryString = "SELECT posts.*, users.nickname FROM posts JOIN users ON posts.uid=users.id WHERE isWaiting=1";
+		        
+				rs = statement.executeQuery(queryString);
+				List<Post> result = new ArrayList<Post>();
+				while(rs.next()) {
+					Post p = new Post();
+					p.setId(rs.getInt(rs.findColumn("id")));
+					p.setText(rs.getString(rs.findColumn("text")));
+					p.setPage(rs.getString(rs.findColumn("page")));
+					p.setDate(rs.getDate(rs.findColumn("date")));
+					p.setUid(rs.getInt(rs.findColumn("uid")));
+					p.setUname(rs.getString("nickname"));
+					result.add(p);
+				}
+				return result;
+			} catch (SQLException e) 
+			{
+				System.out.println("error in querying the DB");
+				e.printStackTrace();
+				return null;
+			}
+	}
+	
+	public void removePost(int id) {
+		try{
+	        String delString = "DELETE FROM posts WHERE id=" + id;
+			PreparedStatement statement = con.prepareStatement(delString);
+            statement.executeUpdate();
+		} catch (Exception e) {
+				System.out.println("error deleting the post");	
+		  }
+	}
+				
+	
+	public void acceptPost(int id) {
+		try {
+	        String updString = "UPDATE posts SET isWaiting=0 WHERE id=" + id;
+			PreparedStatement statement = con.prepareStatement(updString);
+			
+            statement.executeUpdate();
+		    statement.close();
+		} catch(SQLException ex) {
+		  System.out.println("SQLException: " + ex.getMessage());
+	      }
 	}
 	
 	public List<String> getAllUsersNickNames()

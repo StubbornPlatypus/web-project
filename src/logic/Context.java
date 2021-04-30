@@ -2,6 +2,7 @@ package logic;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,13 +31,12 @@ public class Context {
 	HttpSession session;
 	ServletContext application;
 	PrintWriter out;
-	List<Post> awaitingPosts;
+
 	static MySQLDB dbc= new MySQLDB();
 	
 	
-	private final String SESSION_KEY_USER= "currentUser";
-	private final String SESSION_KEY_MANAGER= "isManager";
-	private final int AWAITING_POST_LIMIT= 100;
+	private final String SESSION_KEY_USER = "currentUser";
+	private final String SESSION_KEY_MANAGER = "isManager";
 	
 //used mainly from JSP	
 	public Context(PageContext pContext) throws Exception {
@@ -60,10 +60,7 @@ public class Context {
 				throw(new Exception("no db connection"));
 			}
 		} catch (IOException e) {};
-		
-		List<Post> l = dbc.getAllPosts("test.jsp");
-		System.out.println(Arrays.toString(l.toArray()));
-		
+				
 	}
 	
 	public void insertAlertDlg(String msg, String forwardToPage){
@@ -137,10 +134,31 @@ public class Context {
 			}
 		}
 	}
+	
+	public void handleAcceptPost() {
+		int pid = Integer.parseInt(request.getParameter("pid"));
+		dbc.acceptPost(pid);
+		try {
+			response.sendRedirect("verifyPosts.jsp");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void handleRemovePost() {
+		int pid = Integer.parseInt(request.getParameter("pid"));
+		dbc.removePost(pid);
+		try {
+			response.sendRedirect("verifyPosts.jsp");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
-	public String getFieldFromRequest(String key)
-	{
-		String x = request.getParameter(key);
+	public String getFieldFromRequest(String key){
 		return (request.getParameter(key) != null? request.getParameter(key): "");
 	}
 	
@@ -166,7 +184,7 @@ public class Context {
 		}
 	}
 	
-	public String getPostHTML(String date, String name, String content){
+	public String getPostHTML(Date date, String name, String content){
         return "<div style=\"height: 100px; width: 80%; background-color: yellowgreen;\">\n"
         +"<p style=\"float: right;\" id=\"date\"></p>" + date + "</p>\n"
         +"<hr>\n"
@@ -175,15 +193,17 @@ public class Context {
         +"</div>";
     }
 	
-	public void addToAwaitingPosts(Post post) {
-		awaitingPosts.add(post);
-	}
-	public void removeFromAwaitingPosts(Post post) {
-		awaitingPosts.remove(post);
-	}
-	
-	public List<Post> getAwaitingPosts(){
-		return awaitingPosts;
+	public String getAwaitingPostsAsHTML(){
+		List<Post> awaitingPosts = dbc.getWaitingPosts();
+		String html = "";
+		for (Post post : awaitingPosts) {
+			html += getPostHTML(post.getDate(), post.getUname(), post.getText()) +
+				 "	<form method=\"post\">  " + 
+				 "	<input formaction=\"HttpHandler?cmd=acceptPost&pid=" + post.getId() + "\" type=\"submit\" name=\"btAccept\" value=\"BtAccept\" />  " + 
+				 "	<input formaction=\"HttpHandler?cmd=removePost&pid=" + post.getId() + "\" type=\"submit\" name=\"btDelete\" value=\"BtDelete\" />  " + 
+				 "	</form>	";
+		}
+		return html;
 	}
 	
 }

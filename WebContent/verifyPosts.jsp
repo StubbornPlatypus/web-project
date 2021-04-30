@@ -11,14 +11,7 @@
 	<%@ include file="header.jsp"%>
 	<div class="content">
 		<p style="text-align: center;">Verify posts here...</p>
-	<% 	page import="model.Post"
-		List<Post> posts = ctx.getAwaitingPosts();
-		for(Post post : posts){
-			out.write(ctx.getPostHTML(post.getDate(), "TestName", post.getContent()) + "<br>");
-			out.write("<a href='tofes.jsp'>אשר</a> <br>");
-			out.write("<a href='tofes.jsp'>מחק</a> <br>");
-		}
-		%>
+		<% out.write(ctx.getAwaitingPostsAsHTML()); %>
 	</div>
 </body>
 </html>
