@@ -120,11 +120,18 @@ public class Context {
 	}
 	public void handleRegistration() {
 		String nickname= request.getParameter("nickname");
-		if (userCanBeRegistered(nickname)){
+		if(!getFieldFromRequest("password").equals(getFieldFromRequest("password2"))){
+			request.setAttribute("error", "לא ניתן ליצור משתמש זה, הסיסמאות אינן זהות.");
+			try {
+				request.getRequestDispatcher("tofes.jsp").forward(request, response);
+			} catch (ServletException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if (userCanBeRegistered(nickname)){
 			dbc.AddNewUser(userFromRequest());
 			handleLogin();
-		}
-		else {
+		} else {
 			request.setAttribute("error", "שם משתמש זה כבר בשימוש, אנא הזן שם אחר");
 			try {
 				request.getRequestDispatcher("tofes.jsp").forward(request, response);
@@ -199,8 +206,8 @@ public class Context {
 		for (Post post : awaitingPosts) {
 			html += getPostHTML(post.getDate(), post.getUname(), post.getText()) +
 				 "	<form method=\"post\">  " + 
-				 "	<input formaction=\"HttpHandler?cmd=acceptPost&pid=" + post.getId() + "\" type=\"submit\" name=\"btAccept\" value=\"BtAccept\" />  " + 
-				 "	<input formaction=\"HttpHandler?cmd=removePost&pid=" + post.getId() + "\" type=\"submit\" name=\"btDelete\" value=\"BtDelete\" />  " + 
+				 "	<input formaction=\"HttpHandler?cmd=acceptPost&pid=" + post.getId() + "\" type=\"submit\" name=\"btAccept\" value=\"אשר\" />  " + 
+				 "	<input formaction=\"HttpHandler?cmd=removePost&pid=" + post.getId() + "\" type=\"submit\" name=\"btDelete\" value=\"מחק\" />  " + 
 				 "	</form>	";
 		}
 		return html;

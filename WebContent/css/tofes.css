@@ -7,3 +7,7 @@ form {
 input {
 	margin-bottom: 10px;
 }
+
+.register{
+	visibility: hidden;
+}
