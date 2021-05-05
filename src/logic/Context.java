@@ -37,7 +37,7 @@ public class Context {
 	
 	private final String SESSION_KEY_USER = "currentUser";
 	private final String SESSION_KEY_MANAGER = "isManager";
-	
+
 //used mainly from JSP	
 	public Context(PageContext pContext) throws Exception {
 		this((HttpServletRequest)pContext.getRequest(), 
@@ -118,6 +118,7 @@ public class Context {
 			e.printStackTrace();
 		} 
 	}
+	
 	public void handleRegistration() {
 		String nickname= request.getParameter("nickname");
 		if(!getFieldFromRequest("password").equals(getFieldFromRequest("password2"))){
@@ -211,6 +212,14 @@ public class Context {
 				 "	</form>	";
 		}
 		return html;
+	}
+	
+	public void showLocationOnMap(double lat, double lng) {
+		final double MAP_CORNER_LAT = 33.001502;
+		final double MAP_CORNER_LONG = 35.261688;
+		final int MAP_WIDTH_PX = 969;
+		final int MAP_HEIGHT_PX = 597;
+		
 	}
 	
 }

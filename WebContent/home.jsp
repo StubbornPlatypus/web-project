@@ -29,7 +29,7 @@ body { margin: 0; padding: 0; }
 	    navigator.geolocation.getCurrentPosition(showPosition);
 	  } else {
 	    console.log("Geolocation is not supported by this browser.");
-	    alert("not supported");
+	    alert("geolocation not supported");
 	  }
 	
     function showPosition(position) {
