@@ -14,22 +14,6 @@
 		<canvas id="Canvas" width="969" height="597"></canvas>
 	</div>
 	<script>
-	
-		var lat, lng;
-		
-		if (navigator.geolocation) {
-		    navigator.geolocation.getCurrentPosition(showPosition);
-		  } else {
-		    console.log("Geolocation is not supported by this browser.");
-		    alert("geolocation not supported");
-		  }
-		
-		function showPosition(position) {
-			console.log("Latitude: " + position.coords.latitude +
-				  "<br>Longitude: " + position.coords.longitude);
-			lat = position.coords.latitude;
-			lng = position.coords.longitude;
-		}
 		
 		function measure(lat1, lon1, lat2, lon2){  // generally used geo measurement function
 		    var R = 6378.137; // Radius of earth in KM
@@ -49,6 +33,10 @@
 		const MAP_HEIGHT_PX = 597;
 		const MAP_WIDTH_METER = 1800;
 		const MAP_HEIGHT_METER = 1125;
+		const MAP_WIDTH_PIXEL = 969;
+		const MAP_HEIGHT_PIXEL = 597;
+		var la = 32.996581;
+		var ln = 35.2697695;
 	
 		var canvas = document.getElementById('Canvas');
 		var context = canvas.getContext("2d");
@@ -108,7 +96,12 @@
 		    // Sprite, X location, Y location, Image width, Image height
 		    // You can leave the image height and width off, if you do it will draw the image at default size
 		    context.drawImage(mapSprite, 0, 0);
-		    markerXPos = (MAP_CORNER_LAT - lat) * (measure(MAP_CORNER_LAT, MAP_CORNER_LONG, lat, lon) / )
+		    //markerXPos = Math.abs(MAP_CORNER_LAT - la) * (measure(MAP_CORNER_LAT, MAP_CORNER_LONG, la, ln) / MAP_HEIGHT_METER);
+		    //markerYPos = Math.abs(MAP_CORNER_LONG - ln) * (measure(MAP_CORNER_LAT, MAP_CORNER_LONG, la, ln) / MAP_WIDTH_METER);
+		    markerXPos = MAP_WIDTH_PIXEL * ( measure() ) / 
+		    console.log(markerXPos +"\n"+markerYPos);
+		    
+	        context.drawImage(Markers[0].Sprite, markerXPos, markerYPos, 12, 20);
 	
 		    // Draw markers
 		    for (var i = 0; i < Markers.length; i++) {
@@ -132,7 +125,7 @@
 		    }
 		};
 	
-		setInterval(main, (1000 / 60));
+		setInterval(main, (1000 / 1));	//60
 		</script>
 </body>
 </html>

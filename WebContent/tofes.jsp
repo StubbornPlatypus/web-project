@@ -25,7 +25,7 @@
 			<label for="nickname">כנוי:</label> <input type="text" name="nickname" id="nickname" required value=<%=nickName%>>
 			<br>
 			<label for="password">סיסמה:</label> <input type="password" name="password" id="password" required>
-			<label class="register" for="password2">סיסמה שוב:</label> <input type="password" class="register" name="password2" id="password2" required>
+			<label class="register" for="password2">סיסמה שוב:</label> <input type="password" class="register" name="password2" id="password2">
 			<br>
 			<label for="cbRegister">הרשמה:</label> <input type="checkbox" id="switch" name="switch" value="manager" onclick="change()">
 			<br>
