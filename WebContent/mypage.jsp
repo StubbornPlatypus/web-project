@@ -14,6 +14,15 @@
 		<canvas id="Canvas" width="969" height="597"></canvas>
 	</div>
 	<script>
+	
+		const MAP_CORNER_LAT = 33.001337;
+		const MAP_CORNER_LONG = 35.261808;
+		const MAP_WIDTH_METER = 1800.0;
+		const MAP_HEIGHT_METER = 1125.0;
+		const MAP_WIDTH_PIXEL = 969.0;
+		const MAP_HEIGHT_PIXEL = 597.0;
+		var la = 32.993745;
+		var ln = 35.279259;
 		
 		function measure(lat1, lon1, lat2, lon2){  // generally used geo measurement function
 		    var R = 6378.137; // Radius of earth in KM
@@ -26,17 +35,6 @@
 		    var d = R * c;
 		    return d * 1000; // meters
 		}
-		
-		const MAP_CORNER_LAT = 33.001502;
-		const MAP_CORNER_LONG = 35.261688;
-		const MAP_WIDTH_PX = 969;
-		const MAP_HEIGHT_PX = 597;
-		const MAP_WIDTH_METER = 1800;
-		const MAP_HEIGHT_METER = 1125;
-		const MAP_WIDTH_PIXEL = 969;
-		const MAP_HEIGHT_PIXEL = 597;
-		var la = 32.996581;
-		var ln = 35.2697695;
 	
 		var canvas = document.getElementById('Canvas');
 		var context = canvas.getContext("2d");
@@ -61,9 +59,9 @@
 		    var rect = canvas.getBoundingClientRect();
 		    var mouseXPos = (mouse.x - rect.left);
 		    var mouseYPos = (mouse.y - rect.top);
+		    console.log(mouseXPos+" "+mouseYPos);
 	
-		    console.log("Marker added");
-	        console.log("Postion (X:" + mouseXPos + ", Y:" + mouseYPos);
+	        console.log("Placed marker: " + mouseXPos + " " + mouseYPos);
 	
 		    // Move the marker when placed to a better location
 		    var marker = new Marker();
@@ -88,6 +86,7 @@
 		};
 	
 		var draw = function () {
+			
 		    // Clear Canvas
 		    context.fillStyle = "#000";
 		    context.fillRect(0, 0, canvas.width, canvas.height);
@@ -96,12 +95,11 @@
 		    // Sprite, X location, Y location, Image width, Image height
 		    // You can leave the image height and width off, if you do it will draw the image at default size
 		    context.drawImage(mapSprite, 0, 0);
-		    //markerXPos = Math.abs(MAP_CORNER_LAT - la) * (measure(MAP_CORNER_LAT, MAP_CORNER_LONG, la, ln) / MAP_HEIGHT_METER);
-		    //markerYPos = Math.abs(MAP_CORNER_LONG - ln) * (measure(MAP_CORNER_LAT, MAP_CORNER_LONG, la, ln) / MAP_WIDTH_METER);
-		    markerXPos = MAP_WIDTH_PIXEL * ( measure() ) / 
-		    console.log(markerXPos +"\n"+markerYPos);
 		    
-	        context.drawImage(Markers[0].Sprite, markerXPos, markerYPos, 12, 20);
+		    markerXPos = MAP_WIDTH_PIXEL * (measure(MAP_CORNER_LAT, ln, MAP_CORNER_LAT, MAP_CORNER_LONG) / MAP_WIDTH_METER);
+		    markerYPos = MAP_HEIGHT_PIXEL * (measure(la, MAP_CORNER_LONG, MAP_CORNER_LAT, MAP_CORNER_LONG) / MAP_HEIGHT_METER);
+		    console.log("generated marker: " + markerXPos + " " + markerYPos);
+		    context.drawImage(Markers[0].Sprite, markerXPos+39.989, markerYPos-30.6183, 12, 20);
 	
 		    // Draw markers
 		    for (var i = 0; i < Markers.length; i++) {

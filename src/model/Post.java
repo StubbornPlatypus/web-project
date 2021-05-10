@@ -5,7 +5,7 @@ import java.sql.Date;
 public class Post {
 	
 	int id, uid;
-	String page, text, uname;
+	String page, text, uname, uemail;
 	Date date;
 	
 	public Post(int id, int uid, String page, String text, Date date) {
@@ -24,6 +24,14 @@ public class Post {
 
 	public void setUname(String uname) {
 		this.uname = uname;
+	}
+
+	public String getUemail() {
+		return uemail;
+	}
+
+	public void setUemail(String uemail) {
+		this.uemail = uemail;
 	}
 
 	public int getId() {

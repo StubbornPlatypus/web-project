@@ -26,6 +26,7 @@
 			<br>
 			<label for="password">סיסמה:</label> <input type="password" name="password" id="password" required>
 			<label class="register" for="password2">סיסמה שוב:</label> <input type="password" class="register" name="password2" id="password2">
+			<label class="register" for="email">אימייל:</label> <input type="email" class="register" name="email" id="email">
 			<br>
 			<label for="cbRegister">הרשמה:</label> <input type="checkbox" id="switch" name="switch" value="manager" onclick="change()">
 			<br>

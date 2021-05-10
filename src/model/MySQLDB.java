@@ -107,6 +107,7 @@ public class MySQLDB {
 				List<User> result = new ArrayList<User>();
 				while(rs.next()) {
 					User u = new User();
+					u.setEmail(rs.getString(rs.findColumn("email")));
 					u.setNickName(rs.getString(rs.findColumn("nickname")));
 					u.setPassword(rs.getString(rs.findColumn("password")));
 					u.setRole(rs.getString(rs.findColumn("role")));
@@ -171,6 +172,7 @@ public class MySQLDB {
 					p.setDate(rs.getDate(rs.findColumn("date")));
 					p.setUid(rs.getInt(rs.findColumn("uid")));
 					p.setUname(rs.getString("nickname"));
+					p.setUemail(rs.getString("email"));
 					result.add(p);
 				}
 				return result;

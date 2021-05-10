@@ -172,6 +172,7 @@ public class Context {
 	
 	private User userFromRequest() {
 		User u = new User();
+		u.setEmail(getFieldFromRequest("email"));
 		u.setNickName(getFieldFromRequest("nickname"));
 		u.setPassword(getFieldFromRequest("password"));
 		u.setRole(getFieldFromRequest("role"));
@@ -192,9 +193,10 @@ public class Context {
 		}
 	}
 	
-	public String getPostHTML(Date date, String name, String content){
+	public String getPostHTML(Date date, String name, String email, String content){
         return "<div style=\"height: 100px; width: 80%; background-color: yellowgreen;\">\n"
         +"<p style=\"float: right;\" id=\"date\"></p>" + date + "</p>\n"
+        +"<p style=\"float: left;\" id=\"email\"></p>" + email+ "</p>\n"
         +"<hr>\n"
         +"<p style=\"float: right;\" id=\"name\">" + name + "</p> <p style=\"float: right; white-space: pre;\">  : </p>\n"
         +"<p style=\"float: right;\" id=\"comment_content\">" + content + "</p>\n"
@@ -205,21 +207,14 @@ public class Context {
 		List<Post> awaitingPosts = dbc.getWaitingPosts();
 		String html = "";
 		for (Post post : awaitingPosts) {
-			html += getPostHTML(post.getDate(), post.getUname(), post.getText()) +
+			html += getPostHTML(post.getDate(), post.getUname(), post.getUemail(), post.getText()) +
 				 "	<form method=\"post\">  " + 
 				 "	<input formaction=\"HttpHandler?cmd=acceptPost&pid=" + post.getId() + "\" type=\"submit\" name=\"btAccept\" value=\"אשר\" />  " + 
 				 "	<input formaction=\"HttpHandler?cmd=removePost&pid=" + post.getId() + "\" type=\"submit\" name=\"btDelete\" value=\"מחק\" />  " + 
-				 "	</form>	";
+				 "	</form>	"
+				 +  "<br>	";
 		}
 		return html;
-	}
-	
-	public void showLocationOnMap(double lat, double lng) {
-		final double MAP_CORNER_LAT = 33.001502;
-		final double MAP_CORNER_LONG = 35.261688;
-		final int MAP_WIDTH_PX = 969;
-		final int MAP_HEIGHT_PX = 597;
-		
 	}
 	
 }

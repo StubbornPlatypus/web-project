@@ -5,7 +5,8 @@ public class User {
 	public final static String MGR_ROLE="manager";
 	public final static String REG_ROLE="regular";
 	
-	String nickName, password, role;
+	String nickName, password, role, email;
+	
 	int id;	//model id of the user, retrieved from DB
 	
 	public String getRole() {
@@ -16,6 +17,13 @@ public class User {
 			this.role = DEF_ROLE;
 		else
 			this.role = role;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	public String getNickName() {

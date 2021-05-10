@@ -53,15 +53,16 @@ public class HttpHandler extends HttpServlet {
 			case "logout":
 				ctx.handleLogout();
 				break;
-			case "other":
-				response.getWriter().print("<p style='font-size: 24px'>not supported yet!!!</p>");
-				break;
 			case "acceptPost":
 				ctx.handleAcceptPost();
 				break;
 			case "removePost":
 				ctx.handleRemovePost();
 				break;
+			case "other":
+				response.getWriter().print("<p style='font-size: 24px'>not supported yet!!!</p>");
+				break;
+			
 			case "uploadFile":
 				/* String filename1= uploadTheFile(request, "file1", UPLOAD_FOLDER);*/
 				/*String other = request.getParameter("other");*/
