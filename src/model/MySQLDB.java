@@ -44,11 +44,12 @@ public class MySQLDB {
 	}
 	
 	public void AddNewUser(User user){
-       String sqlString = "INSERT INTO users" + " (nickname, password, role)" 
+       String sqlString = "INSERT INTO users" + " (nickname, password, role, email)" 
 							+ "VALUES ('"
 							+ user.getNickName() + "', '" 
         					+ user.getPassword()  + "', '" 
-							+ user.getRole() + "')";
+        					+ user.getRole()  + "', '" 
+							+ user.getEmail() + "')";
         try {
         		Statement statement = con.createStatement();
 	            statement.executeUpdate(sqlString);
@@ -85,6 +86,7 @@ public class MySQLDB {
             	u.setId(rs.getInt("id"));
             	u.setNickName(rs.getString("nickname"));
             	u.setRole(rs.getString("role"));
+            	u.setEmail(rs.getString("email"));
             	return u;
             }
             else return null;
@@ -160,7 +162,7 @@ public class MySQLDB {
 		try {
 				statement = con.createStatement();
 		        String queryString;
-		        queryString = "SELECT posts.*, users.nickname FROM posts JOIN users ON posts.uid=users.id WHERE isWaiting=1";
+		        queryString = "SELECT posts.*, users.nickname, users.email FROM posts JOIN users ON posts.uid=users.id WHERE isWaiting=1";
 		        
 				rs = statement.executeQuery(queryString);
 				List<Post> result = new ArrayList<Post>();

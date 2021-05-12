@@ -176,6 +176,7 @@ public class Context {
 		u.setNickName(getFieldFromRequest("nickname"));
 		u.setPassword(getFieldFromRequest("password"));
 		u.setRole(getFieldFromRequest("role"));
+		u.setEmail(getFieldFromRequest("email"));
 		//update this method to reflect your user object
 		return u;
 	}
@@ -194,9 +195,9 @@ public class Context {
 	}
 	
 	public String getPostHTML(Date date, String name, String email, String content){
-        return "<div style=\"height: 100px; width: 80%; background-color: yellowgreen;\">\n"
-        +"<p style=\"float: right;\" id=\"date\"></p>" + date + "</p>\n"
-        +"<p style=\"float: left;\" id=\"email\"></p>" + email+ "</p>\n"
+        return "<div style=\"height: 100px; width: 70%; background-color: yellowgreen; position: absolute\">\n"
+        +"<p style=\"float: right;\" id=\"email\">"+email+"</p>\n"
+        +"<p style=\"text-align: left;\" id=\"date\">"+date+"</p>\n"
         +"<hr>\n"
         +"<p style=\"float: right;\" id=\"name\">" + name + "</p> <p style=\"float: right; white-space: pre;\">  : </p>\n"
         +"<p style=\"float: right;\" id=\"comment_content\">" + content + "</p>\n"
@@ -211,8 +212,8 @@ public class Context {
 				 "	<form method=\"post\">  " + 
 				 "	<input formaction=\"HttpHandler?cmd=acceptPost&pid=" + post.getId() + "\" type=\"submit\" name=\"btAccept\" value=\"אשר\" />  " + 
 				 "	<input formaction=\"HttpHandler?cmd=removePost&pid=" + post.getId() + "\" type=\"submit\" name=\"btDelete\" value=\"מחק\" />  " + 
-				 "	</form>	"
-				 +  "<br>	";
+				 "	</form>	" +
+				 "	<br>	";
 		}
 		return html;
 	}
