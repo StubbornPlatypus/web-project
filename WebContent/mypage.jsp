@@ -15,26 +15,27 @@
 	</div>
 	<script>
 	
-		const MAP_CORNER_LAT = 33.001337;
-		const MAP_CORNER_LONG = 35.261808;
-		const MAP_WIDTH_METER = 1800.0;
-		const MAP_HEIGHT_METER = 1125.0;
-		const MAP_WIDTH_PIXEL = 969.0;
-		const MAP_HEIGHT_PIXEL = 597.0;
-		var la = 32.993745;
-		var ln = 35.279259;
+		const MAP_CORNER_LAT = 33.00139924826094;
+		const MAP_CORNER_LONG = 35.2620053176368;
 		
-		function measure(lat1, lon1, lat2, lon2){  // generally used geo measurement function
-		    var R = 6378.137; // Radius of earth in KM
-		    var dLat = lat2 * Math.PI / 180 - lat1 * Math.PI / 180;
-		    var dLon = lon2 * Math.PI / 180 - lon1 * Math.PI / 180;
-		    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-		    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-		    Math.sin(dLon/2) * Math.sin(dLon/2);
-		    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-		    var d = R * c;
-		    return d * 1000; // meters
-		}
+		const MAP_RELATIVE_POINT_LAT = 32.9936298184339; 
+		const MAP_RELATIVE_POINT_LONG = 35.2781992807017;
+		
+		const MAP_RELATIVE_POINT_X = 880.0;
+		const MAP_RELATIVE_POINT_Y = 324.0;
+		
+		//בית ספר
+		var lat = 32.995492295556396;
+		var lon = 35.2655882771443;
+		
+		//כיכר 6
+		var lat2 = 32.99814173541092;
+		var lon2 = 35.273065312328484;
+		
+		//כיכר 1
+		var lat3 = 32.993627264500425;
+		var lon3 = 35.27819540864996;
+		
 	
 		var canvas = document.getElementById('Canvas');
 		var context = canvas.getContext("2d");
@@ -59,7 +60,6 @@
 		    var rect = canvas.getBoundingClientRect();
 		    var mouseXPos = (mouse.x - rect.left);
 		    var mouseYPos = (mouse.y - rect.top);
-		    console.log(mouseXPos+" "+mouseYPos);
 	
 	        console.log("Placed marker: " + mouseXPos + " " + mouseYPos);
 	
@@ -69,6 +69,7 @@
 		    marker.YPos = mouseYPos - marker.Height;
 	
 		    Markers.push(marker);
+		    draw();
 		}
 	
 		// Add mouse click event listener to canvas
@@ -96,10 +97,10 @@
 		    // You can leave the image height and width off, if you do it will draw the image at default size
 		    context.drawImage(mapSprite, 0, 0);
 		    
-		    markerXPos = MAP_WIDTH_PIXEL * (measure(MAP_CORNER_LAT, ln, MAP_CORNER_LAT, MAP_CORNER_LONG) / MAP_WIDTH_METER);
-		    markerYPos = MAP_HEIGHT_PIXEL * (measure(la, MAP_CORNER_LONG, MAP_CORNER_LAT, MAP_CORNER_LONG) / MAP_HEIGHT_METER);
+		    markerXPos = (lon3 - MAP_CORNER_LONG) * (MAP_RELATIVE_POINT_X / (MAP_RELATIVE_POINT_LONG - MAP_CORNER_LONG));
+		    markerYPos = (lat3 - MAP_CORNER_LAT) * (MAP_RELATIVE_POINT_Y / (MAP_RELATIVE_POINT_LAT - MAP_CORNER_LAT));
 		    console.log("generated marker: " + markerXPos + " " + markerYPos);
-		    context.drawImage(Markers[0].Sprite, markerXPos+39.989, markerYPos-30.6183, 12, 20);
+		    context.drawImage(Markers[0].Sprite, markerXPos, markerYPos, 12, 20);	//+(236-123), +(335-164)
 	
 		    // Draw markers
 		    for (var i = 0; i < Markers.length; i++) {
@@ -123,7 +124,7 @@
 		    }
 		};
 	
-		setInterval(main, (1000 / 1));	//60
+		//setInterval(main, (1000 / 0.1));	//60
 		</script>
 </body>
 </html>
