@@ -7,7 +7,7 @@ public class Post {
 	int id, uid;
 	String page, text, uname, uemail;
 	Date date;
-	
+
 	public Post(int id, int uid, String page, String text, Date date) {
 		this.id = id;
 		this.uid = uid;

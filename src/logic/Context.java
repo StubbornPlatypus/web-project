@@ -166,6 +166,10 @@ public class Context {
 		
 	}
 
+	public void handleCreatePost() {
+		
+	}
+	
 	public String getFieldFromRequest(String key){
 		return (request.getParameter(key) != null? request.getParameter(key): "");
 	}
@@ -176,9 +180,16 @@ public class Context {
 		u.setNickName(getFieldFromRequest("nickname"));
 		u.setPassword(getFieldFromRequest("password"));
 		u.setRole(getFieldFromRequest("role"));
-		u.setEmail(getFieldFromRequest("email"));
 		//update this method to reflect your user object
 		return u;
+	}
+	
+	private Post postFromRequest() {
+		Post p = new Post();
+		p.setUid();
+		p.setPage();
+		p.setText(getFieldFromRequest("comment"));
+		p.setDate(new Date(System.currentTimeMillis()));
 	}
 	
 	private boolean userCanBeRegistered(String nickname){
@@ -209,6 +220,7 @@ public class Context {
 		String html = "";
 		for (Post post : awaitingPosts) {
 			html += getPostHTML(post.getDate(), post.getUname(), post.getUemail(), post.getText()) +
+				 "	<br><br><br><br><br><br>"	+
 				 "	<form method=\"post\">  " + 
 				 "	<input formaction=\"HttpHandler?cmd=acceptPost&pid=" + post.getId() + "\" type=\"submit\" name=\"btAccept\" value=\"אשר\" />  " + 
 				 "	<input formaction=\"HttpHandler?cmd=removePost&pid=" + post.getId() + "\" type=\"submit\" name=\"btDelete\" value=\"מחק\" />  " + 

@@ -59,6 +59,9 @@ public class HttpHandler extends HttpServlet {
 			case "removePost":
 				ctx.handleRemovePost();
 				break;
+			case "createPost":
+				ctx.handleCreatePost();
+				break;
 			case "other":
 				response.getWriter().print("<p style='font-size: 24px'>not supported yet!!!</p>");
 				break;

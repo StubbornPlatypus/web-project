@@ -12,20 +12,18 @@
 <body class="top-menu">
 	<ul>
 		<li><a href="home.jsp">בית</a></li>
+		
 		<% 
-  	if (!ctx.isLoggedIn())
-  		out.write("<li><a href='tofes.jsp'>כניסה</a></li>");
-  	else
-  		out.write("<li><a href='HttpHandler?cmd=logout'>יציאה</a></li>");
-  %>
+  		if (!ctx.isLoggedIn())
+  			out.write("<li><a href='tofes.jsp'>כניסה</a></li>");
+  		else
+  			out.write("<li><a href='HttpHandler?cmd=logout'>יציאה</a></li>");
+ 		%>
+ 		
 		<li><a href="mypage.jsp">דפים שלי...</a></li>
-		<li class="dropdown"><a href="#" class="dropbtn">משניים...</a>
-			<div class="dropdown-content">
-				<a href="#">אופציה א</a> <a href="#">אופציה ב</a> <a href="#">אופציה
-					ג</a>
-			</div></li>
 		<li><a href="about.jsp">אודות</a></li>
-		<%
+		
+  		<%
 		if (ctx.isManager())
 	  		out.write("<li><a href='verifyPosts.jsp'>אישור פוסטים</a></li>");
 		%>

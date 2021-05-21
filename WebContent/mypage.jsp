@@ -87,7 +87,7 @@
 		var canvas = document.getElementById('Canvas');
 		var context = canvas.getContext("2d");
 		
-	
+		
 		// Map sprite
 		var mapSprite = new Image();
 		mapSprite.src = "map_updated.jpeg";

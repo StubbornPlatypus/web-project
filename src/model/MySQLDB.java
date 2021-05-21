@@ -59,6 +59,23 @@ public class MySQLDB {
             	System.out.println("SQLException: " + ex.getMessage());
             	}			
 	}
+	
+	public void addNewPost(Post post){
+	       String sqlString = "INSERT INTO posts" + " (uid, page, date, text)" 
+								+ "VALUES ('"
+								+ post.getUid() + "', '" 
+	        					+ post.getPage()  + "', '" 
+	        					+ post.getDate()  + "', '" 
+								+ post.getText() + "')";
+	        try {
+	        		Statement statement = con.createStatement();
+		            statement.executeUpdate(sqlString);
+		            
+		            statement.close();
+	            } catch(SQLException ex) {
+	            	System.out.println("SQLException: " + ex.getMessage());
+	            	}			
+		}
 
 	public boolean ModifyUser(User user){
 	    try {
