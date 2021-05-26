@@ -167,7 +167,13 @@ public class Context {
 	}
 
 	public void handleCreatePost() {
-		
+		dbc.addNewPost(postFromRequest());
+		try {
+			response.sendRedirect("home.jsp");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public String getFieldFromRequest(String key){
@@ -185,11 +191,13 @@ public class Context {
 	}
 	
 	private Post postFromRequest() {
+		User u = (User) this.session.getAttribute(SESSION_KEY_USER);
 		Post p = new Post();
-		p.setUid();
-		p.setPage();
+		p.setUid(u.getId());
+		p.setPage("test.jsp");	//TODO: know page by redirect to sendPost.jsp
 		p.setText(getFieldFromRequest("comment"));
 		p.setDate(new Date(System.currentTimeMillis()));
+		return p;
 	}
 	
 	private boolean userCanBeRegistered(String nickname){
@@ -222,7 +230,7 @@ public class Context {
 			html += getPostHTML(post.getDate(), post.getUname(), post.getUemail(), post.getText()) +
 				 "	<br><br><br><br><br><br>"	+
 				 "	<form method=\"post\">  " + 
-				 "	<input formaction=\"HttpHandler?cmd=acceptPost&pid=" + post.getId() + "\" type=\"submit\" name=\"btAccept\" value=\"אשר\" />  " + 
+				 "	<input formaction='HttpHandler?cmd=acceptPost&pid=" + post.getId() + "' type='submit' name='btAccept' value='אשר' />  " + 
 				 "	<input formaction=\"HttpHandler?cmd=removePost&pid=" + post.getId() + "\" type=\"submit\" name=\"btDelete\" value=\"מחק\" />  " + 
 				 "	</form>	" +
 				 "	<br>	";
