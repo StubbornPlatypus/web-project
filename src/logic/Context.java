@@ -225,16 +225,15 @@ public class Context {
 	
 	public String getAwaitingPostsAsHTML(){
 		List<Post> awaitingPosts = dbc.getWaitingPosts();
-		String html = "";
+		String html = "<form method='post'>";
 		for (Post post : awaitingPosts) {
 			html += getPostHTML(post.getDate(), post.getUname(), post.getUemail(), post.getText()) +
 				 "	<br><br><br><br><br><br>"	+
-				 "	<form method=\"post\">  " + 
 				 "	<input formaction='HttpHandler?cmd=acceptPost&pid=" + post.getId() + "' type='submit' name='btAccept' value='אשר' />  " + 
-				 "	<input formaction=\"HttpHandler?cmd=removePost&pid=" + post.getId() + "\" type=\"submit\" name=\"btDelete\" value=\"מחק\" />  " + 
-				 "	</form>	" +
+				 "	<input formaction='HttpHandler?cmd=removePost&pid=" + post.getId() + "' type='submit' name='btDelete' value='מחק' />  " + 
 				 "	<br>	";
 		}
+		html += "</form>";
 		return html;
 	}
 	
