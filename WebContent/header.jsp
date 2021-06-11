@@ -20,10 +20,12 @@
   			out.write("<li><a href='HttpHandler?cmd=logout'>יציאה</a></li>");
  		%>
  		
-		<li><a href="mypage.jsp">דפים שלי...</a></li>
+		<li><a href="path-intro.jsp">השביל</a></li>
 		<li><a href="about.jsp">אודות</a></li>
 		
   		<%
+  		if (ctx.isLoggedIn())
+  			out.write("<li><a href='sendPost.jsp'>שליחת פוסט</a></li>");
 		if (ctx.isManager())
 	  		out.write("<li><a href='verifyPosts.jsp'>אישור פוסטים</a></li>");
 		%>

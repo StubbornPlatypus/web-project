@@ -65,7 +65,6 @@ public class HttpHandler extends HttpServlet {
 			case "other":
 				response.getWriter().print("<p style='font-size: 24px'>not supported yet!!!</p>");
 				break;
-			
 			case "uploadFile":
 				/* String filename1= uploadTheFile(request, "file1", UPLOAD_FOLDER);*/
 				/*String other = request.getParameter("other");*/

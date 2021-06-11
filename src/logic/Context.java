@@ -18,6 +18,7 @@ import javax.servlet.jsp.PageContext;
 
 import model.MySQLDB;
 import model.Post;
+import model.Station;
 import model.User;
 
 //This class is a middle layer class between the "communication" layers 
@@ -194,7 +195,9 @@ public class Context {
 		User u = (User) this.session.getAttribute(SESSION_KEY_USER);
 		Post p = new Post();
 		p.setUid(u.getId());
-		p.setPage("test.jsp");	//TODO: know page by redirect to sendPost.jsp
+		p.setUemail(u.getEmail());
+		p.setUname(u.getNickName());
+		p.setPage(getFieldFromRequest("pages"));
 		p.setText(getFieldFromRequest("comment"));
 		p.setDate(new Date(System.currentTimeMillis()));
 		return p;
@@ -237,4 +240,23 @@ public class Context {
 		return html;
 	}
 	
+	public Station getStationByID(int sid){
+		return dbc.getStation(sid);
+	}
+	
+	public List<Post> getPostsBySid(int sid){
+		return dbc.getAllPosts(Integer.toString(sid));
+	}
+	
+	public String getPostsFormatted(int sid){
+		List<Post> posts = getPostsBySid(sid);
+		String html = "";
+		for (Post post : posts) {
+			html += 
+				getPostHTML(post.getDate(), post.getUname(), post.getUemail(), post.getText()) +
+				"	<br><br><br><br><br><br>" + 
+				"<hr>";
+		}
+		return html;
+	}
 }

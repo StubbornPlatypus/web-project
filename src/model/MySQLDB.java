@@ -60,6 +60,33 @@ public class MySQLDB {
             	}			
 	}
 	
+	public Station getStation(int sid){
+		Statement statement;
+        ResultSet rs;
+		try {
+				statement = con.createStatement();
+		        String queryString;
+		        queryString = "SELECT * FROM stations WHERE id=" + sid;
+		        
+				rs = statement.executeQuery(queryString);
+				if (rs.next()) {
+					Station result = new Station();
+					result.setImage(rs.getString(rs.findColumn("image")));
+					result.setName(rs.getString(rs.findColumn("name")));
+					result.setDescription(rs.getString(rs.findColumn("description")));
+					
+					return result;
+				}
+				else
+					return null;
+			} catch (SQLException e) 
+			{
+				System.out.println("error in querying the DB");
+				e.printStackTrace();
+				return null;
+			}
+	}
+	
 	public void addNewPost(Post post){
 	       String sqlString = "INSERT INTO posts" + " (uid, page, date, text)" 
 								+ "VALUES ('"
@@ -149,7 +176,7 @@ public class MySQLDB {
 		try {
 				statement = con.createStatement();
 		        String queryString;
-		        queryString = "SELECT * FROM posts WHERE page='"+page+"'";
+		        queryString = "SELECT posts.*, users.nickname, users.email FROM posts JOIN users ON posts.uid=users.id WHERE page='"+page+"' AND isWaiting=0";
 		        
 				rs = statement.executeQuery(queryString);
 				List<Post> result = new ArrayList<Post>();
@@ -160,6 +187,8 @@ public class MySQLDB {
 					p.setPage(rs.getString(rs.findColumn("page")));
 					p.setDate(rs.getDate(rs.findColumn("date")));
 					p.setUid(rs.getInt(rs.findColumn("uid")));
+					p.setUname(rs.getString("nickname"));
+					p.setUemail(rs.getString("email"));
 					result.add(p);
 				}
 				return result;
